@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"net/http"
+	"URL-Shortener/internal/handler"
 
 	"github.com/gin-gonic/gin"
 )
@@ -9,12 +9,8 @@ import (
 func SetupRouter() *gin.Engine {
 	router := gin.Default()
 
-	//Эндоинт "Работа сервера"
-	router.GET("/health", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "All is OK",
-		})
-	})
+	//Эндпоинт "Работа сервера"
+	router.GET("/health", handler.Health)
 
 	return router
 }
