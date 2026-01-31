@@ -9,14 +9,16 @@ import (
 
 type UrlHandler struct {
 	service *service.UrlServ
+	baseURL string
 }
 
 type createUrlRequest struct {
 	OriginalUrl string `json:"original_url"`
 }
 
-func NewUrlHandler(service *service.UrlServ) *UrlHandler {
-	return &UrlHandler{service: service}
+func NewUrlHandler(service *service.UrlServ, baseURL string) *UrlHandler {
+	return &UrlHandler{service: service,
+		baseURL: baseURL}
 }
 
 func (h *UrlHandler) Create(c *gin.Context) {
@@ -29,7 +31,7 @@ func (h *UrlHandler) Create(c *gin.Context) {
 	shortCode := h.service.Create(request.OriginalUrl)
 
 	c.JSON(http.StatusCreated, gin.H{
-		"short_url": "http://localhost:8080/" + shortCode,
+		"short_url": h.baseURL + "/" + shortCode,
 	})
 }
 
