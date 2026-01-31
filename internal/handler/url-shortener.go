@@ -22,7 +22,7 @@ func NewUrlHandler(service *service.UrlServ) *UrlHandler {
 func (h *UrlHandler) Create(c *gin.Context) {
 	var request createUrlRequest
 	if err := c.ShouldBindJSON(&request); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "ivalid request"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request"})
 		return
 	}
 
@@ -37,6 +37,9 @@ func (h *UrlHandler) RedirectURL(c *gin.Context) {
 	shortCode := c.Param("shortCode")
 	originalUrl, ok := h.service.GetOriginalURL(shortCode)
 	if ok {
-		c.Redirect(http.StatusMovedPermanently, originalUrl)
+		c.Redirect(http.StatusFound, originalUrl)
+		return
 	}
+	c.JSON(http.StatusNotFound, gin.H{"error": "invalid request"})
+	return
 }
