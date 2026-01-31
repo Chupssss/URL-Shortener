@@ -32,3 +32,11 @@ func (h *UrlHandler) Create(c *gin.Context) {
 		"short_url": "http://localhost:8080/" + shortCode,
 	})
 }
+
+func (h *UrlHandler) RedirectURL(c *gin.Context) {
+	shortCode := c.Param("shortCode")
+	originalUrl, ok := h.service.GetOriginalURL(shortCode)
+	if ok {
+		c.Redirect(http.StatusMovedPermanently, originalUrl)
+	}
+}

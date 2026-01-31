@@ -11,14 +11,18 @@ import (
 func SetupRouter() *gin.Engine {
 	router := gin.Default()
 
-	//Эндпоинт "Работа сервера"
+	// Пинг сервера
 	router.GET("/health", handler.Health)
 
 	repo := repos.NewUrlRepos()
 	service := service.NewUrlService(repo)
 	handler := handler.NewUrlHandler(service)
 
+	// Укоротитель
 	router.POST("/urls", handler.Create)
+
+	// Переадресация
+	router.GET("/:shortCode", handler.RedirectURL)
 
 	return router
 }
