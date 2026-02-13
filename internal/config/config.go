@@ -10,6 +10,11 @@ import (
 type Config struct {
 	Port    string
 	BaseURL string
+	DBHost  string
+	DBPort  string
+	DBUser  string
+	DBPass  string
+	DBName  string
 }
 
 func Load() *Config {
@@ -21,6 +26,11 @@ func Load() *Config {
 	return &Config{
 		Port:    getEnv("PORT", "8080"),
 		BaseURL: getEnv("BASE_URL", "http://localhost:8080/"),
+		DBHost:  getEnv("DB_HOST", "loacalhost"),
+		DBPort:  getEnv("DB_PORT", "5432"),
+		DBUser:  getEnv("DB_USER", "youruser"),
+		DBPass:  getEnv("DB_PASSWORD", "yourpassword"),
+		DBName:  getEnv("DB_NAME", "yourdbname"),
 	}
 }
 
