@@ -11,7 +11,7 @@ import (
 func main() {
 	cfg := config.Load()
 
-	repo := repos.NewUrlRepos()
+	repo := repos.NewUrlRepos(cfg)
 	service := service.NewUrlService(repo)
 	handler := handler.NewUrlHandler(service, cfg.BaseURL)
 
