@@ -37,7 +37,7 @@ func (h *UrlHandler) Create(c *gin.Context) {
 
 func (h *UrlHandler) RedirectURL(c *gin.Context) {
 	shortCode := c.Param("shortCode")
-	originalUrl, ok := h.service.GetOriginalURL(shortCode)
+	originalUrl, ok := h.service.Resolve(shortCode)
 	if ok {
 		c.Redirect(http.StatusFound, originalUrl)
 		return

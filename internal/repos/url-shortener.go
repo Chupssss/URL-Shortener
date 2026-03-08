@@ -36,3 +36,10 @@ func (r *UrlRepo) Get(shortUrl string) (string, bool) {
 	}
 	return original_url, true
 }
+
+func (r *UrlRepo) IncClicks(shortUrl string) {
+	_, err := r.conn.Exec(context.Background(), "UPDATE urls SET clicks = clicks + 1 WHERE short_url = $1", shortUrl)
+	if err != nil {
+		log.Printf("Error: %v\n", err)
+	}
+}

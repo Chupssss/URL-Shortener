@@ -40,3 +40,14 @@ func (service *UrlServ) GetOriginalURL(shortCode string) (string, bool) {
 
 	return "", false
 }
+
+func (service *UrlServ) Resolve(shortUrl string) (string, bool) {
+	url, ok := service.repo.Get(shortUrl)
+	if !ok {
+		return "", false
+	}
+
+	service.repo.IncClicks(shortUrl)
+
+	return url, true
+}
