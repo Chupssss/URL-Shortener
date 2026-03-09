@@ -38,12 +38,12 @@ func (h *UrlHandler) Create(c *gin.Context) {
 func (h *UrlHandler) RedirectURL(c *gin.Context) {
 	shortCode := c.Param("shortCode")
 	originalUrl, ok := h.service.Resolve(shortCode)
-	if ok {
-		c.Redirect(http.StatusFound, originalUrl)
+	if !ok {
+		c.JSON(http.StatusNotFound, gin.H{"error": "invalid request"})
 		return
 	}
-	c.JSON(http.StatusNotFound, gin.H{"error": "invalid request"})
-	return
+
+	c.Redirect(http.StatusFound, originalUrl)
 }
 
 func (h *UrlHandler) CreateStats(c *gin.Context) {
