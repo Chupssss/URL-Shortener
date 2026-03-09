@@ -32,15 +32,6 @@ func generateCode() string {
 	return string(code)
 }
 
-func (service *UrlServ) GetOriginalURL(shortCode string) (string, bool) {
-	originalUrl, ok := service.repo.Get(shortCode)
-	if ok {
-		return originalUrl, true
-	}
-
-	return "", false
-}
-
 func (service *UrlServ) Resolve(shortUrl string) (string, bool) {
 	url, ok := service.repo.Get(shortUrl)
 	if !ok {
