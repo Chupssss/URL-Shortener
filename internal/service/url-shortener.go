@@ -14,9 +14,9 @@ func NewUrlService(repo *repos.UrlRepo) *UrlServ {
 	return &UrlServ{repo: repo}
 }
 
-func (service *UrlServ) Create(originalUrl string) string {
+func (s *UrlServ) Create(originalUrl string) string {
 	shortCode := generateCode()
-	service.repo.Save(shortCode, originalUrl)
+	s.repo.Save(shortCode, originalUrl)
 	return shortCode
 }
 
@@ -32,13 +32,15 @@ func generateCode() string {
 	return string(code)
 }
 
-func (service *UrlServ) Resolve(shortUrl string) (string, bool) {
-	url, ok := service.repo.Get(shortUrl)
+func (s *UrlServ) Resolve(shortUrl string) (string, bool) {
+	url, ok := s.repo.Get(shortUrl)
 	if !ok {
 		return "", false
 	}
 
-	service.repo.IncClicks(shortUrl)
+	s.repo.IncClicks(shortUrl)
 
 	return url, true
 }
+
+//func (s *UrlServ) Stats()
