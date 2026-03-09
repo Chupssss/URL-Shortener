@@ -6,6 +6,8 @@ import (
 	"time"
 )
 
+var rnd = rand.New(rand.NewSource(time.Now().UnixNano()))
+
 type UrlServ struct {
 	repo *repos.UrlRepo
 }
@@ -22,11 +24,10 @@ func (s *UrlServ) Create(originalUrl string) string {
 
 func generateCode() string {
 	const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	rand.Seed(time.Now().UnixNano())
 
 	code := make([]byte, 5)
 	for i := 0; i < len(code); i++ {
-		code[i] = letters[rand.Intn(len(letters))]
+		code[i] = letters[rnd.Intn(len(letters))]
 	}
 
 	return string(code)
