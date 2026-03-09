@@ -43,4 +43,6 @@ func (s *UrlServ) Resolve(shortUrl string) (string, bool) {
 	return url, true
 }
 
-//func (s *UrlServ) Stats()
+func (s *UrlServ) Stats(shortUrl string) (string, int, time.Time, bool) {
+	return s.repo.GetUrlStats(shortUrl)
+}

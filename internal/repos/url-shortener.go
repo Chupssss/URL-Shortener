@@ -4,9 +4,9 @@ import (
 	"URL-Shortener/internal/config"
 	"context"
 	"fmt"
-	"log"
-
 	"github.com/jackc/pgx/v4"
+	"log"
+	"time"
 )
 
 type UrlRepo struct {
@@ -42,4 +42,16 @@ func (r *UrlRepo) IncClicks(shortUrl string) {
 	if err != nil {
 		log.Printf("Error: %v\n", err)
 	}
+}
+
+func (r *UrlRepo) GetUrlStats(shortUrl string) (string, int, time.Time, bool) {
+	var originalUrl string
+	var clicks int
+	var createdAt time.Time
+	err := r.conn.QueryRow(context.Background(), "SELECT original_url, clicks, created_at FROM urls WHERE short_url=$1", shortUrl).Scan(&originalUrl, &clicks, &createdAt)
+	if err != nil {
+		log.Printf("Error: %v\n", err)
+		return "", 0, time.Time{}, false
+	}
+	return originalUrl, clicks, createdAt, true
 }

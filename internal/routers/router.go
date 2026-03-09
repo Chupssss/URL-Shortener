@@ -18,5 +18,8 @@ func SetupRouter(h *handler.UrlHandler) *gin.Engine {
 	// Переадресация
 	router.GET("/:shortCode", h.RedirectURL)
 
+	// Статистика укороченной ссылки
+	router.GET("/stats/:shortCode", h.CreateStats)
+
 	return router
 }
