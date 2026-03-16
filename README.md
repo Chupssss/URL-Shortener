@@ -11,6 +11,7 @@
 -   Go
 -   Gin
 -   PostgreSQL
+-   pgx
 -   golang-migrate
 -   Docker
 
